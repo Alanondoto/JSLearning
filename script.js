@@ -1,13 +1,6 @@
+'use strict';
+
 let numberOfFilms;
-
-function start() {
-    numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
-    while (numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
-        numberOfFilms = +prompt('Сколько фильмов вы уже посмотрели?', '');
-    }
-}
-
-start(); 
 
 const personalMovieDB = {
     count: numberOfFilms,
@@ -17,7 +10,34 @@ const personalMovieDB = {
     privat: false
 };
 
-function rememberMyFilms() {
+personalMovieDB.start = function() {
+    personalMovieDB.count = +prompt('Сколько фильмов вы уже посмотрели?', '');
+    while (personalMovieDB.count == '' || personalMovieDB.count == null || isNaN(personalMovieDB.count)) {
+        personalMovieDB.count = +prompt('Сколько фильмов вы уже посмотрели?', '');
+    }
+};
+
+personalMovieDB.start();
+
+console.log(personalMovieDB.count);
+
+
+
+personalMovieDB.detectPersonalLevel = function() {
+    if (personalMovieDB.count < 10) {
+        console.log('Просмотрено довольно мало фильмов');
+    } else if (personalMovieDB.count >= 10 && personalMovieDB.count <= 30) {
+        console.log('Вы классический зритель');
+    } else if (personalMovieDB.count > 30) {
+        console.log('Вы киноман');
+    } else {
+        console.log('Произошла ошибка'); 
+    }
+};
+
+personalMovieDB.detectPersonalLevel();
+
+personalMovieDB.rememberMyFilms = function() {
     for (let i = 0; i < 2; i++) {
         const a = prompt('Один из последних просмотренных фильмов?', ''),
               b = prompt('На сколько оцените его?', '');
@@ -29,38 +49,46 @@ function rememberMyFilms() {
             i--;
         }
     }
-}
+};
 
-rememberMyFilms();
+personalMovieDB.rememberMyFilms();
 
-function detectPersonalLevel() {
-    if (personalMovieDB.count < 10) {
-        console.log('Просмотрено довольно мало фильмов');
-    } else if (personalMovieDB.count >= 10 && personalMovieDB.count <= 30) {
-        console.log('Вы классический зритель');
-    } else if (personalMovieDB.count > 30) {
-        console.log('Вы киноман');
+personalMovieDB.toggleVisibleMyDB = function() {
+    if (personalMovieDB.privat == false) {
+        personalMovieDB.privat = true;
     } else {
-        console.log('Произошла ошибка'); 
+        personalMovieDB.privat = false;
     }
-}
+};
 
-detectPersonalLevel();
+personalMovieDB.toggleVisibleMyDB();
 
-function showMyDB(hidden) {
+personalMovieDB.showMyDB = function(hidden) {
     if (!hidden) {
         console.log(personalMovieDB);
     }
-}
+};
 
-showMyDB(personalMovieDB.privat);
+personalMovieDB.showMyDB(personalMovieDB.privat);
 
-function writeYourGenres() {
+personalMovieDB.writeYourGenres = function() {
     for (let i = 1; i <= 3; i++) {
         personalMovieDB.genres[i-1] = prompt(`Ваш любимый жанр под номером ${i}`, '');
+        if (personalMovieDB.genres[i-1] == null || personalMovieDB.genres[i-1] == '') {
+            i--;
+        }
+        if (i == 3) {
+            personalMovieDB.genres.forEach(function(genre, index) {
+                console.log(`Любимый жанр #${index+1} - это ${genre}`);
+            });
+        }
     }
-}
+};
 
-writeYourGenres();
+personalMovieDB.writeYourGenres();
+
+
+
+
 
 
