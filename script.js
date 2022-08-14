@@ -1,9 +1,7 @@
 'use strict';
 
-let numberOfFilms;
-
 const personalMovieDB = {
-    count: numberOfFilms,
+    count: 0,
     movies: {},
     actors: {},
     genres: [],
@@ -18,10 +16,6 @@ personalMovieDB.start = function() {
 };
 
 personalMovieDB.start();
-
-console.log(personalMovieDB.count);
-
-
 
 personalMovieDB.detectPersonalLevel = function() {
     if (personalMovieDB.count < 10) {
